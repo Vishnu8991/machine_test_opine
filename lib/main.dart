@@ -3,7 +3,7 @@ import 'package:machine_test_opine/view/home_screen.dart';
 
 void main() {
   runApp(
-    MyApp(),);
+    MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(debugShowCheckedModeBanner: false,
       home: CategoryDisplay(),
     );
   }
