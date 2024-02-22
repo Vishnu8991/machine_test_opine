@@ -4,9 +4,6 @@ import 'package:machine_test_opine/controller/product_controller.dart';
 import 'package:machine_test_opine/model/meal_model.dart';
 import 'package:provider/provider.dart';
 
-void main(){
-  runApp(MaterialApp(home: Cart(),));
-}
 
 class Cart extends StatelessWidget {
   const Cart({super.key});
