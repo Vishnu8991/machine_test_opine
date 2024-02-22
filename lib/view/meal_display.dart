@@ -1,7 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:machine_test_opine/controller/product_controller.dart';
 import 'package:machine_test_opine/model/meal_model.dart';
 import 'package:machine_test_opine/service/meal_service.dart';
+import 'package:machine_test_opine/view/cart_display.dart';
+import 'package:provider/provider.dart';
+
+
 
 class MealDisplay extends StatefulWidget {
   final String strCategory;
@@ -41,11 +46,26 @@ class _MealDisplayState extends State<MealDisplay> {
 
   @override
   Widget build(BuildContext context) {
+
+    ProductController productController = Provider.of<ProductController>(context); 
+
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child:
+            IconButton(
+              onPressed: (){Navigator.push(
+               context,
+               MaterialPageRoute(builder: (context) => Cart()),
+                );
+              }, 
+              icon: Icon(Icons.shopping_cart, color: Colors.red,)) 
+          )],
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(widget.strCategory),
@@ -77,9 +97,35 @@ class _MealDisplayState extends State<MealDisplay> {
                               alignment: Alignment.center,
                               child: Padding(
                                 padding: EdgeInsets.all(screenWidth * 0.01),
-                                child: Text(
-                                  meal.strMeal ?? "",
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      meal.strMeal ?? "",
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                    ),
+                                    
+
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                                      child: InkWell(
+                                        onTap: (){
+                                          productController.add(meal);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                    backgroundColor: Colors.green,
+                                    content: Text("Successfully added to cart"),
+                                    duration: Duration(seconds: 2),));
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: double.infinity,
+                                          color: Colors.yellow,
+                                          child: 
+                                          Text("Add to cart")
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
